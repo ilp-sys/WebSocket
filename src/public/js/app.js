@@ -38,7 +38,7 @@ function handleRoomSubmit(event){
     event.preventDefault();
     const input = form.querySelector("input")
     //event_room이라는 event를 emit
-    //socket.io의 마지막 인자로 보내는 함수 -> The server initiate and make fron-end run this function.. Also could sent param!
+    //socket.io의 마지막 인자로 보내는 함수 -> The server initiate and make fron-end run this function.. Also could send param!
     socket.emit("enter_room", input.value, showRoom)
     roomName = input.value;
     input.value = "";
