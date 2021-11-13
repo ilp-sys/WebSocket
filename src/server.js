@@ -1,7 +1,9 @@
 import http from "http";
 //import WebSocket from "ws";
-import SocketIO from "socket.io"
+//import SocketIO from "socket.io"
+import {Server} from "socket.io"
 import express from "express";
+import { instrument } from "@socket.io/admin-ui";
 
 const app = express();
 
@@ -13,7 +15,17 @@ app.get("/*", (req,res) => res.redirect("/")); //catchall url
 
 const httpServer = http.createServer(app);
 //const wss = new WebSocket.Server({server});
-const wsServer = SocketIO(httpServer);
+//const wsServer = SocketIO(httpServer);
+const wsServer = new Server(httpServer,{
+    cors:{
+        origin: ["https://admin.socket.io"],
+        credentials: true
+    }
+});
+
+instrument(wsServer, {
+    auth: false
+});
 
 //in memory adapter -> DB adpater, adapter enables your servers communicate each other
 //All sockets have private room => iterate map and check key
